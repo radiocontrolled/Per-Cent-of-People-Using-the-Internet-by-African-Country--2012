@@ -1,0 +1,17 @@
+body{
+	background: #efefef;
+	font-family: Helvetica;
+	font-weight: 600;
+	color: rgb(8,29,88);
+}
+.highlight{
+	fill:  #34495E!important;
+}
+path{
+	fill: none;
+	stroke: rgb(8,29,88);
+	stroke-width: 1;
+}
+#tooltip{
+	position: absolute;
+}
