@@ -4,6 +4,12 @@ body{
 	font-weight: 600;
 	color: rgb(8,29,88);
 }
+h1{
+	font-size: 1em;
+	padding-bottom: 1em;
+	padding-left: 2.5em;
+
+}
 .highlight{
 	fill:  #34495E!important;
 }
@@ -14,4 +20,13 @@ path{
 }
 #tooltip{
 	position: absolute;
+}
+
+li{
+	
+    padding: .5em 1em;
+    list-style-type: none;
+	display: inline!important;
+	 border-top-width: 15px;
+    border-top-style: solid;
 }

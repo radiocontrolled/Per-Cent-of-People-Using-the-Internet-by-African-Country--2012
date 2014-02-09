@@ -15,7 +15,7 @@ var svg = d3.select("article")
 	
 var color = d3.scale.quantize()
     .range(['rgb(255,255,217)','rgb(237,248,177)','rgb(199,233,180)','rgb(127,205,187)','rgb(65,182,196)','rgb(29,145,192)','rgb(34,94,168)','rgb(37,52,148)'])
-    .domain([0.80, 55.00]); 
+    .domain([0.0, 55.00]); // starting at 0, because there are some regions I have no data on..
 	
 d3.json("Africa.json", function(json){
 	d3.csv("PercentageOfIndividualsUsingTheInternet.csv",function(csv){
@@ -43,6 +43,9 @@ d3.json("Africa.json", function(json){
                    		if (value) { return color(value); }
                         else { return "#ffffff"; }
                    })
+            .text(function(d){
+            	return d.properties.name;
+            })
 			.on("mouseover", function(d){			
 				d3.select("#tooltip")
 					.select("#perCent").append("text")
@@ -54,6 +57,21 @@ d3.json("Africa.json", function(json){
 				d3.select("#tooltip text").remove();
 				
 			})
+		
+		var legend = d3.select('#legend')
+	  		.append('ul')
+    		.attr('class', 'list-inline');
+    	
+    	var keys = legend.selectAll('li')
+    		.data(color.range());
+    	
+    	keys.enter().append('li')
+    		.style('border-top-color', String)
+ 
+    		.text(function(d) {
+        		var r = color.invertExtent(d);
+        		return Math.ceil(r[0]) +" - " + Math.floor(r[1]) ;
+    		});
 	})
 		
 })
