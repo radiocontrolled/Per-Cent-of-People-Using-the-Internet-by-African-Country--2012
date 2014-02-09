@@ -1,8 +1,8 @@
 var w = window.innerWidth/1.2;
-var h = window.innerHeight/1.2;
-
+var h = window.innerHeight/1.5;
+var draw, map, legend;
 var projection = d3.geo.mercator();
-    projection.scale([w/3]).translate([w/4,h/2])
+    projection.scale([w/3.5]).translate([w/4,h/1.9])
 
 var path = d3.geo.path().projection(projection);
 
@@ -16,62 +16,85 @@ var svg = d3.select("article")
 var color = d3.scale.quantize()
     .range(['rgb(255,255,217)','rgb(237,248,177)','rgb(199,233,180)','rgb(127,205,187)','rgb(65,182,196)','rgb(29,145,192)','rgb(34,94,168)','rgb(37,52,148)'])
     .domain([0.0, 55.00]); // starting at 0, because there are some regions I have no data on..
+
+legend = d3.select('#legend').append('ul');
+	    		
 	
 d3.json("Africa.json", function(json){
 	d3.csv("PercentageOfIndividualsUsingTheInternet.csv",function(csv){
 	
-               
-		for(var j = 0; j < csv.length; j++){
-			for(var i = 0; i < json.features.length; i++){
-					if(json.features[i].properties.name == csv[j].Country){
-						//bind the per cent data into the geo json
-						json.features[i].properties.perCent = csv[j].Value;
-						
-						break;
-					}				
+		draw = function(year){
+			
+			for(var j = 0; j < csv.length; j++){
+				for(var i = 0; i < json.features.length; i++){
+						if(json.features[i].properties.name == csv[j].Country){
+							json.features[i].properties.perCent = csv[j][year];
+							break;
+						}				
+					}
 				}
-			}
-	
-
-		var map = svg.selectAll("path")
-			.data(json.features)
-			.enter()
-			.append("path")
-			.attr("d", path)
-			.style("fill", function(d) {
-               	  var value = d.properties.perCent;
-                   		if (value) { return color(value); }
-                        else { return "#ffffff"; }
-                   })
-            .text(function(d){
-            	return d.properties.name;
-            })
-			.on("mouseover", function(d){			
-				d3.select("#tooltip")
-					.select("#perCent").append("text")
-					.text(function(){
-						return d.properties.name + ", " + d.properties.perCent + "%";
-					})
-			})
-			.on("mouseout",function(d){
-				d3.select("#tooltip text").remove();
-				
-			})
 		
-		var legend = d3.select('#legend')
-	  		.append('ul')
-    		.attr('class', 'list-inline');
-    	
-    	var keys = legend.selectAll('li')
-    		.data(color.range());
-    	
-    	keys.enter().append('li')
-    		.style('border-top-color', String)
- 
-    		.text(function(d) {
-        		var r = color.invertExtent(d);
-        		return Math.ceil(r[0]) +" - " + Math.floor(r[1]) ;
-    		});
+	
+			 map = svg.selectAll("path")
+				.data(json.features)
+				.enter()
+				.append("path")
+				.attr("d", path)
+	            .style({
+	            	"fill":function(d) {
+	               	  var value = d.properties.perCent;
+	                   		if (value) { return color(value); }
+	                        else { return "#ffffff"; }},
+	                 "opacity":.8
+	            })
+	            .text(function(d){
+	            	return d.properties.name;
+	            })
+				.on("mouseover", function(d){	
+					var coordinates = d3.mouse(this);
+					d3.select(this).style("opacity",1)			
+					d3.select("#tooltip")
+					.style({
+							"left": coordinates[0]  + "px",
+							"top": coordinates[1] + "px"
+						}).classed("hidden",false)
+						.select("#perCent").append("text")
+						.text(function(){
+							return d.properties.name + ", " + d.properties.perCent + "%";
+						})
+				})
+				.on("mouseout",function(d){
+					d3.select(this).style("opacity",.8)
+					d3.select("#tooltip").classed("hidden",true).select("text").remove();
+				})
+			
+	    	
+	    	var keys = legend.selectAll('li')
+	    		.data(color.range());
+	    	
+	    	keys.enter().append('li').classed("legend",true)
+	    		.style({
+	    			"border-top-color":String,
+	    			"opacity": .8
+	    		})
+	    		.text(function(d) {
+	        		var r = color.invertExtent(d);
+	        		return Math.ceil(r[0]) +" - " + Math.floor(r[1]) ; // give the approximate value
+	    		});
+			
+		}
+
+		draw(2012);
+		
+		$(".btn").click(function(e){
+			 $("#yearSelect").find(".highlight").removeClass("highlight");
+			e.preventDefault();
+			map.remove();
+			draw($(this).attr('data-value'));
+		 	$(this).addClass("highlight");
+		
+		});
+   			
 	})
 		
 })
