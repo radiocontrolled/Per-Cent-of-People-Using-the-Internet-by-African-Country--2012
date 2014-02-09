@@ -1,3 +1,6 @@
+What per cent of people are using the Internet by African country? 
+
+This map compares UN Data figures from 2012 and 2007. 
 
 <strong>Sources:</strong>
 
