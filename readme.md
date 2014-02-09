@@ -5,7 +5,7 @@ This map compares UN Data figures from 2012 and 2007.
 <strong>Sources:</strong>
 
 UN Data: <a href="http://data.un.org/Data.aspx?d=ITU&f=ind1Code%3aI99H">Percentage of individuals using the Internet</a><br/>
-Note: Data for Cape Verde, Comoros, Mauritius, São Tomé and Príncipe and Seychelles are not included. Libya figure is 2011 data. No UN figure available for South Sudan or the disputed Western Sahara region.
+Note: Data for Cape Verde, Comoros, Mauritius, São Tomé and Príncipe and Seychelles are not included. Libya figure is 2011 data. No UN figure available for South Sudan or the disputed Western Sahara region so I set their values to 0.
 This is my second visualisation of Internet access and use by country or region. <a href="http://bl.ocks.org/radiocontrolled/8246732">My first looks at the UK.</a>
 
 <strong>Technical sources:</strong>
