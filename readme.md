@@ -7,11 +7,3 @@ UN Data: <a href="http://data.un.org/Data.aspx?d=ITU&f=ind1Code%3aI99H">Percenta
 
 Note: Data for Cape Verde, Comoros, Mauritius, São Tomé and Príncipe and Seychelles are not included. Libya figure is 2011 data. No UN figure available for South Sudan or the disputed Western Sahara region.
 
-
-#C7E9B4
-#253494
-#FFFFD9
-#41B6C4
-#EDF8B1
-#1D91C0
-#225EA8
