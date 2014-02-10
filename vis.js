@@ -60,7 +60,12 @@ d3.json("Africa.json", function(json){
 						}).classed("hidden",false)
 						.select("#perCent").append("text")
 						.text(function(){
-							return d.properties.name + ", " + d.properties.perCent + "%";
+							if(d.properties.perCent){
+								return d.properties.name + ", " + d.properties.perCent + "%";
+							}
+							else{
+								return d.properties.name + ", UN Data not available";
+							}
 						})
 				})
 				.on("mouseout",function(d){
